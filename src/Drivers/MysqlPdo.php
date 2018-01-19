@@ -23,7 +23,7 @@ class MysqlPdo implements DriverStrategy
 
     public function save(Model $data)
     {
-        $query = "INSERT INTO %s (%s) VALUES (%s)";
+        $query = 'INSERT INTO %s (%s) VALUES (%s)';
 
         $fields = [];
         $fields_to_bind = [];
@@ -38,7 +38,12 @@ class MysqlPdo implements DriverStrategy
 
         $query = sprintf($query, $this->table, $fields, $fields_to_bind);
 
-        var_dump($query);
+        // pdo statman
+        $this->query = $this->pdo->prepare($query);
+
+        foreach ($data as $field => $value):
+            $this->query->bindValue($field, $value);
+        endforeach;
 
         return $this;
     }
@@ -65,7 +70,8 @@ class MysqlPdo implements DriverStrategy
 
     public function exec(string $query = null)
     {
-        
+        $this->query->execute();
+        return $this;
     }
 
     public function first()

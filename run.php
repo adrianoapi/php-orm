@@ -15,7 +15,7 @@ $model = new Model;
 $model->setDriver($driver);
 
 // Inserção de registros
-$model->name = "Adriano";
-$model->age = 30;
-$model->email = "sdcomputadores@gmail.com";
+$model->name = "Katia";
+$model->age = 28;
+$model->email = "katia@hotmail.com";
 $model->save();
