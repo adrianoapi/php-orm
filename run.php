@@ -23,6 +23,11 @@ $model->age = 28;
 $model->email = "katia@hotmail.com";
 $model->save();
 
+$model->name = "Marcos";
+$model->age = 17;
+$model->email = "mac@uol.com.br";
+$model->save();
+
 // Busca registros
 var_dump($model->findAll());
 
@@ -33,3 +38,5 @@ $model->save();
 
 // Seleciona um registro
 var_dump($model->findFirst(1));
+$model->id = 2;
+var_dump($model->delete());
