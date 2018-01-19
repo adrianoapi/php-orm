@@ -26,5 +26,10 @@ $model->save();
 // Busca registros
 var_dump($model->findAll());
 
+// Atualização de um registro
+$model->id = 1;
+$model->name = 'Maria';
+$model->save();
+
 // Seleciona um registro
 var_dump($model->findFirst(1));

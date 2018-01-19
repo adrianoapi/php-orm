@@ -23,37 +23,54 @@ class MysqlPdo implements DriverStrategy
 
     public function save(Model $data)
     {
-        $query = 'INSERT INTO %s (%s) VALUES (%s)';
+        if (!empty($data->id)) {
+            $this->update($data);
+            return $this;
+        }
 
-        $fields = [];
-        $fields_to_bind = [];
-
-        foreach ($data as $field => $value):
-            $fields[] = $field;
-            $fields_to_bind[] = ':' . $field;
-        endforeach;
-
-        $fields = implode(', ', $fields);
-        $fields_to_bind = implode(', ', $fields_to_bind);
-
-        $query = sprintf($query, $this->table, $fields, $fields_to_bind);
-
-        // pdo statman
-        $this->query = $this->pdo->prepare($query);
-
-        $this->bind($data);
+        $this->insert($data);
 
         return $this;
     }
 
     public function insert(Model $data)
     {
-        
+        $query = 'INSERT INTO %s (%s) VALUES (%s)';
+
+        $fields = [];
+        $fields_to_bind = [];
+        foreach ($data as $field => $value) {
+            $fields[] = $field;
+            $fields_to_bind[] = ':' . $field;
+        }
+
+        $fields = implode(', ', $fields);
+        $fields_to_bind = implode(', ', $fields_to_bind);
+
+        $query = sprintf($query, $this->table, $fields, $fields_to_bind);
+
+        $this->query = $this->pdo->prepare($query);
+        $this->bind($data);
+
+        return $this;
     }
 
     public function update(Model $data)
     {
-        
+        if (empty($data->id)) {
+            throw new \Exception("Id is required");
+        }
+
+        $query = 'UPDATE %s SET %s';
+
+        $data_to_update = $this->params($data);
+        $query = sprintf($query, $this->table, $data_to_update);
+        $query .= ' WHERE id=:id';
+
+        $this->query = $this->pdo->prepare($query);
+        $this->bind($data);
+
+        return $this;
     }
 
     public function select(array $conditions = [])
@@ -87,12 +104,12 @@ class MysqlPdo implements DriverStrategy
 
     public function first()
     {
-        $this->query->fetch(\PDO::FETCH_ASSOC);
+        return $this->query->fetch(\PDO::FETCH_ASSOC);
     }
 
     public function all()
     {
-        $this->query->fetchAll(\PDO::FETCH_ASSOC);
+        return $this->query->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     protected function params($conditions)
