@@ -23,7 +23,24 @@ class MysqlPdo implements DriverStrategy
 
     public function save(Model $data)
     {
-        
+        $query = "INSERT INTO %s (%s) VALUES (%s)";
+
+        $fields = [];
+        $fields_to_bind = [];
+
+        foreach ($data as $field => $value):
+            $fields[] = $field;
+            $fields_to_bind[] = ':' . $field;
+        endforeach;
+
+        $fields = implode(', ', $fields);
+        $fields_to_bind = implode(', ', $fields_to_bind);
+
+        $query = sprintf($query, $this->table, $fields, $fields_to_bind);
+
+        var_dump($query);
+
+        return $this;
     }
 
     public function insert(Model $data)

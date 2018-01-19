@@ -11,13 +11,13 @@ class Model
 
     public function setDriver(DriverStrategy $driver)
     {
-        $this->driver;
-        $this;
+        $this->driver = $driver;
+        return $this;
     }
 
     protected function getDriver()
     {
-        $driver;
+        return $this->driver;
     }
 
     public function save()
@@ -46,7 +46,7 @@ class Model
     public function delete()
     {
         $this->getDriver()
-                ->delete(['id' => $id])
+                ->delete(['id' => $this->id])
                 ->exec();
     }
 
