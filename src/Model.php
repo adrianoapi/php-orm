@@ -10,4 +10,29 @@ class Model
         return $driver;
     }
 
+    protected function getDriver()
+    {
+        
+    }
+
+    public function save()
+    {
+        
+    }
+
+    public function findAll()
+    {
+        
+    }
+
+    public function findFirst()
+    {
+        
+    }
+
+    public function delete()
+    {
+        
+    }
+
 }
