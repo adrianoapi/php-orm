@@ -2,10 +2,12 @@
 
 namespace App\ORM;
 
+use App\ORM\Drivers\DriverStrategy;
+
 class Model
 {
 
-    public function setDriver($driver)
+    public function setDriver(DriverStrategy $driver)
     {
         return $driver;
     }
@@ -20,12 +22,12 @@ class Model
         
     }
 
-    public function findAll()
+    public function findAll(array $conditions = [])
     {
         
     }
 
-    public function findFirst()
+    public function findFirst($id)
     {
         
     }
