@@ -10,6 +10,9 @@ $pdo = new PDO('mysql:host=localhost;dbname=php_orm', 'root', '');
 $driver = new MysqlPdo($pdo);
 $driver->setTable('users');
 
+// Execução com o driver
+$driver->exec('truncate users;');
+
 // Instanciando model
 $model = new Model;
 $model->setDriver($driver);
@@ -19,3 +22,9 @@ $model->name = "Katia";
 $model->age = 28;
 $model->email = "katia@hotmail.com";
 $model->save();
+
+// Busca registros
+var_dump($model->findAll());
+
+// Seleciona um registro
+var_dump($model->findFirst(1));
