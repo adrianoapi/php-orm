@@ -12,7 +12,8 @@
     "require": {},
 	"autoload":{
 		"psr-4" :{
-			"App\\ORM\\": "src"
+			"Core\\ORM\\": "src",
+			"App\\": "app"
 		}
 	}
 }

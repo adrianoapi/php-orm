@@ -2,19 +2,18 @@
 
 require __DIR__ . '/vendor/autoload.php';
 
-use App\ORM\Model;
-use App\ORM\Drivers\MysqlPdo;
+use App\Model\Users;
+use Core\ORM\Drivers\MysqlPdo;
 
 // Conexão
 $pdo = new PDO('mysql:host=localhost;dbname=php_orm', 'root', '');
 $driver = new MysqlPdo($pdo);
-$driver->setTable('users');
 
 // Execução com o driver
 $driver->exec('truncate users;');
 
 // Instanciando model
-$model = new Model;
+$model = new Users;
 $model->setDriver($driver);
 
 // Inserção de registros

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\ORM;
+namespace Core\ORM;
 
-use App\ORM\Drivers\DriverStrategy;
+use Core\ORM\Drivers\DriverStrategy;
 
-class Model
+abstract class Model
 {
 
     protected $driver;
@@ -12,6 +12,7 @@ class Model
     public function setDriver(DriverStrategy $driver)
     {
         $this->driver = $driver;
+        $this->driver->setTable($this->table);
         return $this;
     }
 
@@ -48,6 +49,16 @@ class Model
         $this->getDriver()
                 ->delete(['id' => $this->id])
                 ->exec();
+    }
+
+    public function __get($variable)
+    {
+        if ($variable === 'table') {
+            $table = get_class($this);
+            $table = explode('\\', $table);
+            return strtolower(array_pop($table));
+        }
+        return null;
     }
 
 }

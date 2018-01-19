@@ -1,8 +1,8 @@
 <?php
 
-namespace App\ORM\Drivers;
+namespace Core\ORM\Drivers;
 
-use App\ORM\Model;
+use Core\ORM\Model;
 
 interface DriverStrategy
 {
