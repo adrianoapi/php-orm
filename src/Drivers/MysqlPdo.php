@@ -135,5 +135,4 @@ class MysqlPdo implements DriverStrategy
             $this->query->bindValue($field, $value);
         }
     }
-
 }

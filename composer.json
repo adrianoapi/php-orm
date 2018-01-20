@@ -15,5 +15,8 @@
 			"Core\\ORM\\": "src",
 			"App\\": "app"
 		}
-	}
+	},
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^3.2"
+    }
 }
